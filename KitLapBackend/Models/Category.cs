@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace KitLapBackend.Models
 {
-    public class ProductRating
+    public class Category
     {
-        public float Rate { get; set; }
-        public int Count { get; set; }
+        public int Id { get; set; }
+        public string CategoryName { get; set; }
     }
 }
