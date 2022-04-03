@@ -18,15 +18,9 @@ namespace KitLapBackend.Models
         public string ImageUrl { get; set; }
         [Required]
         public float Price { get; set; }
-        public List<float> Rating { get; set; }
+        public List<Rating> Rating { get; set; }
         [Required]
         public bool HasDiscount { get; set; } = false;
         public int DiscountValue { get; set; } = 0;
-        public float DiscountedPrice { get; set; }
-
-        public Product()
-        {
-            DiscountedPrice = ((100 - DiscountValue) / 100) * Price;
-        }
     }
 }
