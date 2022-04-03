@@ -1,4 +1,5 @@
 using KitLapBackend.Data;
+using KitLapBackend.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace KitLapBackend
             services.AddDbContext<DataContext>(options => {
                 options.UseMySQL(_config.GetConnectionString("DefaultConnection"));
             });
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
