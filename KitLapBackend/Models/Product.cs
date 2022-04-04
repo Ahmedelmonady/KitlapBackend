@@ -21,6 +21,6 @@ namespace KitLapBackend.Models
         public List<Rating> Rating { get; set; }
         [Required]
         public bool HasDiscount { get; set; } = false;
-        public int DiscountValue { get; set; } = 0;
+        public int DiscountRate { get; set; } = 0;
     }
 }
