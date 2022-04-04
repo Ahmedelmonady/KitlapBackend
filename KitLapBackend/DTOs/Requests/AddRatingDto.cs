@@ -11,6 +11,6 @@ namespace KitLapBackend.DTOs.Requests
         [Required]
         public int ProductId { get; set; }
         [Required, Range(0,5)]
-        public float RatingValue { get; set; }
+        public int RatingValue { get; set; }
     }
 }
