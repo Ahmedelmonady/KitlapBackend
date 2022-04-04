@@ -18,7 +18,7 @@ namespace KitLapBackend.Models
         public string ImageUrl { get; set; }
         [Required]
         public float Price { get; set; }
-        public List<Rating> Rating { get; set; }
+        public List<Rating> Ratings { get; set; }
         [Required]
         public bool HasDiscount { get; set; } = false;
         public int DiscountRate { get; set; } = 0;
