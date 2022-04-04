@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KitLapBackend.DTOs.Requests
 {
-    public class AddRatingsDto
+    public class AddRatingDto
     {
         [Required]
         public int ProductId { get; set; }
