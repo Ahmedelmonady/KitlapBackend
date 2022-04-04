@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using KitLapBackend.DTOs;
+using KitLapBackend.DTOs.Responses;
 using KitLapBackend.Models;
 using System;
 using System.Collections.Generic;
