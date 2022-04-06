@@ -66,5 +66,19 @@ namespace KitLapBackend.Controllers
 
             return Ok("Rating Updated Successfully!");
         }
+
+        [HttpPost, Route("RatingCategory")]
+        public async Task<ActionResult> DeleteRating(DeleteRatingDto deleteRatingDto)
+        {
+            var rating = await _context.Ratings.FirstOrDefaultAsync(rating => rating.Id == deleteRatingDto.RatingId);
+            if (rating == null)
+                return NotFound("Rating Not Found.");
+
+            _context.Ratings.Remove(rating);
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Rating deleted successfully");
+        }
     }
 }
