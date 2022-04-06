@@ -128,5 +128,18 @@ namespace KitLapBackend.Controllers
 
             return Ok("Product Deleted Successfully!");
         }
+
+        [HttpDelete, Route("DeleteAllProducts")]
+        public async Task<ActionResult> DeleteAllProducts()
+        {
+            if (!await _context.Products.AnyAsync())
+                return NotFound("No Products Exist");
+
+            _context.Products.RemoveRange(await _context.Products.ToListAsync());
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Products Deleted Successfully!");
+        }
     }
 }
