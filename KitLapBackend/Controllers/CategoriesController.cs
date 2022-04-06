@@ -94,5 +94,18 @@ namespace KitLapBackend.Controllers
 
             return Ok("Categories deleted successfully");
         }
+
+        [HttpDelete, Route("DeleteAllCategories")]
+        public async Task<ActionResult> DeleteAllCategories()
+        {
+            if (!await _context.Categories.AnyAsync())
+                return NotFound("No Categories Exist");
+
+            _context.Categories.RemoveRange(await _context.Categories.ToListAsync());
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Categories Deleted Successfully!");
+        }
     }
 }

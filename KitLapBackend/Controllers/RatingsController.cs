@@ -94,5 +94,18 @@ namespace KitLapBackend.Controllers
 
             return Ok("Ratings deleted successfully");
         }
+
+        [HttpDelete, Route("DeleteAllRatings")]
+        public async Task<ActionResult> DeleteAllRatings()
+        {
+            if (!await _context.Ratings.AnyAsync())
+                return NotFound("No Ratings Exist");
+
+            _context.Ratings.RemoveRange(await _context.Ratings.ToListAsync());
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Ratings Deleted Successfully!");
+        }
     }
 }
