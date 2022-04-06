@@ -10,17 +10,22 @@ namespace KitLapBackend.Helpers
         public AutoMapperProfiles()
         {
             //Mapping Product to ProductDto showing RatingsStats
-            CreateMap<Product, ProductDto>()
+            CreateMap<Product, ProductSummaryDto>()
                 .ForMember(dest => dest.DiscountedPrice, opt => opt.MapFrom(src => src.HasDiscount ? (1 - (src.DiscountRate / 100)) * src.Price : 0))
-                .ForMember(dest => dest.RatingStats, opt => opt.MapFrom(src => 
-                new RatingsStatsDto{ RatingsAverage = (float)src.Ratings.Average(val => val.Value), RatingsCount = src.Ratings.Count }))
-                .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.Categories));
+                .ForMember(dest => dest.RatingStats, opt => opt.MapFrom(src =>
+                new RatingsStatsDto { RatingsAverage = src.Ratings.Count > 0 ? (float)src.Ratings.Average(val => val.Value) : 0, RatingsCount = src.Ratings.Count }));
+
+            //Mapping Product to ProductDto showing RatingsStats
+            CreateMap<Product, ProductDetailsDto>()
+                .ForMember(dest => dest.DiscountedPrice, opt => opt.MapFrom(src => src.HasDiscount ? (1 - (src.DiscountRate / 100)) * src.Price : 0));
             
             //Mapping Ratings to RatingsDto showing Values
             CreateMap<Rating, RatingsDto>();
 
             //Mapping Categories to CateogriesDto showing Values
             CreateMap<Category, CategoryDto>();
+
+            CreateMap<ProductSummaryDto, Product>();
         }
     }
 }
