@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using KitLapBackend.DTOs.Responses;
 using KitLapBackend.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace KitLapBackend.Helpers
 {
@@ -20,7 +17,7 @@ namespace KitLapBackend.Helpers
                 .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.Categories));
             
             //Mapping Ratings to RatingsDto showing Values
-            CreateMap<Rating, CategoriesDto>();
+            CreateMap<Rating, RatingsDto>();
 
             //Mapping Categories to CateogriesDto showing Values
             CreateMap<Category, CategoryDto>();

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace KitLapBackend.DTOs.Responses
+﻿namespace KitLapBackend.DTOs.Responses
 {
     public class CategoryDto
     {
