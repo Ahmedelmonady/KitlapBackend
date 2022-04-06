@@ -41,7 +41,7 @@ namespace KitLapBackend.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Created("", _context.Products.ProjectTo<ProductDto>(_mapper.ConfigurationProvider).FirstOrDefault(id => id.Id == addCategoryDto.ProductId));
+            return Created("", _context.Products.ProjectTo<ProductSummaryDto>(_mapper.ConfigurationProvider).FirstOrDefault(id => id.Id == addCategoryDto.ProductId));
         }
 
         [HttpPost, Route("GetCategories")]
@@ -67,7 +67,7 @@ namespace KitLapBackend.Controllers
             return Ok("Category Updated Successfully!");
         }
 
-        [HttpPost, Route("DeleteCategory")]
+        [HttpDelete, Route("DeleteCategory")]
         public async Task<ActionResult> DeleteCategory(DeleteCategoryDto deleteCategoryDto)
         {
             var category = await _context.Categories.FirstOrDefaultAsync(category => category.Id == deleteCategoryDto.CategoryId);
@@ -79,6 +79,20 @@ namespace KitLapBackend.Controllers
             await _context.SaveChangesAsync();
 
             return Ok("Category deleted successfully");
+        }
+
+        [HttpDelete, Route("DeleteProductCategories")]
+        public async Task<ActionResult> DeleteProductCategory(DeleteProductCategoriesDto deleteCategoriesDto)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(product => product.Id == deleteCategoriesDto.ProductId);
+            if (product == null)
+                return NotFound("Product Not Found.");
+
+            _context.Categories.RemoveRange(product.Categories);
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Categories deleted successfully");
         }
     }
 }
