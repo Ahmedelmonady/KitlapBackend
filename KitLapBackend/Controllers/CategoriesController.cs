@@ -26,22 +26,22 @@ namespace KitLapBackend.Controllers
         }
 
         [HttpPost, Route("AddCategory")]
-        public async Task<ActionResult> AddCategory(AddCategoryDto categoriesDto)
+        public async Task<ActionResult> AddCategory(AddCategoryDto addCategoryDto)
         {
-            var product = await _context.Products.Include(p => p.Categories).FirstOrDefaultAsync(product => product.Id == categoriesDto.ProductId);
+            var product = await _context.Products.Include(p => p.Categories).FirstOrDefaultAsync(product => product.Id == addCategoryDto.ProductId);
             if (product == null)
                 return NotFound("Cannot find the associated Product.");
 
             product.Categories.Add(
                 new Category
                 {
-                    CategoryName = categoriesDto.CategoryName
+                    CategoryName = addCategoryDto.CategoryName
                 }
                 );
 
             await _context.SaveChangesAsync();
 
-            return Created("", _context.Products.ProjectTo<ProductDto>(_mapper.ConfigurationProvider).FirstOrDefault(id => id.Id == categoriesDto.ProductId));
+            return Created("", _context.Products.ProjectTo<ProductDto>(_mapper.ConfigurationProvider).FirstOrDefault(id => id.Id == addCategoryDto.ProductId));
         }
 
         [HttpPost, Route("GetCategories")]
@@ -52,19 +52,33 @@ namespace KitLapBackend.Controllers
         }
 
         [HttpPost, Route("UpdateCategory")]
-        public async Task<ActionResult> UpdateRating(UpdateCategoryDto categoryDto)
+        public async Task<ActionResult> UpdateRating(UpdateCategoryDto updateCategoryDto)
         {
-            var category = await _context.Categories.FirstOrDefaultAsync(rating => rating.Id == categoryDto.RatingId);
+            var category = await _context.Categories.FirstOrDefaultAsync(category => category.Id == updateCategoryDto.CategoryId);
             if (category == null)
                 return NotFound("Category Not Found.");
 
-            category.CategoryName = categoryDto.CategoryName;
+            category.CategoryName = updateCategoryDto.CategoryName;
 
             _context.Categories.Update(category);
 
             await _context.SaveChangesAsync();
 
             return Ok("Category Updated Successfully!");
+        }
+
+        [HttpPost, Route("DeleteCategory")]
+        public async Task<ActionResult> DeleteCategory(DeleteCategoryDto deleteCategoryDto)
+        {
+            var category = await _context.Categories.FirstOrDefaultAsync(category => category.Id == deleteCategoryDto.CategoryId);
+            if (category == null)
+                return NotFound("Category Not Found.");
+
+            _context.Categories.Remove(category);
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Category deleted successfully");
         }
     }
 }
