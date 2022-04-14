@@ -45,14 +45,14 @@ namespace KitLapBackend.Controllers
         }
 
         [HttpPost, Route("GetCategories")]
-        public ActionResult<List<CategoryDto>> GetRatings([FromBody] int ProductId)
+        public ActionResult<List<CategoryDto>> GetCategories([FromBody] int ProductId)
         {
-            var categories = _context.Ratings.Where(p => p.ProductId == ProductId).ProjectTo<CategoryDto>(_mapper.ConfigurationProvider);
+            var categories = _context.Categories.Where(p => p.ProductId == ProductId).ProjectTo<CategoryDto>(_mapper.ConfigurationProvider);
             return Ok(categories);
         }
 
         [HttpPost, Route("UpdateCategory")]
-        public async Task<ActionResult> UpdateRating(UpdateCategoryDto updateCategoryDto)
+        public async Task<ActionResult> UpdateCategory(UpdateCategoryDto updateCategoryDto)
         {
             var category = await _context.Categories.FirstOrDefaultAsync(category => category.Id == updateCategoryDto.CategoryId);
             if (category == null)
