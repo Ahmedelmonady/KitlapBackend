@@ -45,9 +45,9 @@ namespace KitLapBackend.Controllers
         }
 
         [HttpPost, Route("GetRatings")]
-        public ActionResult<List<RatingsDto>> GetRatings([FromBody]int ProductId)
+        public ActionResult<List<RatingsDto>> GetRatings(GetRatingsDto ratingsDto)
         {
-            var ratings = _context.Ratings.Where(p => p.ProductId == ProductId).ProjectTo<RatingsDto>(_mapper.ConfigurationProvider);
+            var ratings = _context.Ratings.Where(p => p.ProductId == ratingsDto.ProductId).ProjectTo<RatingsDto>(_mapper.ConfigurationProvider);
             return Ok(ratings);
         }
 
