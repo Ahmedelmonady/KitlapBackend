@@ -14,9 +14,22 @@ namespace KitLapBackend
     {
         private readonly IConfiguration _config;
 
-        public Startup(IConfiguration configuration)
+        private readonly IHostEnvironment _env;
+
+        public IConfigurationRoot ConfigurationRoot { get; }
+
+        public Startup(IConfiguration configuration, IHostEnvironment env)
         {
             _config = configuration;
+
+            _env = env;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            ConfigurationRoot = builder.Build();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
